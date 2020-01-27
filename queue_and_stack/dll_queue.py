@@ -133,13 +133,15 @@ class DoublyLinkedList:
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
     def delete(self, node):
-        # Decrement length to fit deletion
-        self.length -= 1
 
         # LL is empty
         if not self.head and not self.tail:
             # Nothing to delete, so just return
             return
+
+        if self.length is not None:
+            # Decrement length to fit deletion
+            self.length -= 1
         
         # If head and tail are the same
         if self.head == self.tail:
@@ -200,10 +202,10 @@ class Queue:
     def dequeue(self):
         if self.size > 0:
         # Values leave from the front when exiting
-            head = self.storage.head
-            self.storage.delete(head)
             self.size -= 1
-            return head.value
+            return self.storage.remove_from_head()
+        else:
+            return None
 
     def len(self):
         return self.size
