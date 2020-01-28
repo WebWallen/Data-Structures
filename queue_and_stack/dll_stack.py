@@ -140,36 +140,38 @@ class DoublyLinkedList:
     the node was the head or the tail"""
     def delete(self, node):
 
-        # LL is empty
+        # If there is not a head *and* tail (LL is empty)
         if not self.head and not self.tail:
             # Nothing to delete, so just return
             return
         
-        # If head and tail are the same and head is a node (vs an object or other data structure)
+        # If head and tail are equal and node is in the head (vs an object or other data structure)
         if self.head == self.tail and self.head is node:
-            # Assign both values to None
+            # Assign both head and tail values to None
             self.head = None
             self.tail = None
 
-        # If node is the head
+        # If node equals the head
         elif self.head == node:
-            # Next element automatically becomes new head
+            # Assign the next element to current (deleted) head
             self.head = self.head.next
-            # We want ASSIGNMENT, not EQUALITY here!!!
+            # Delete the node (this method is in node class)
             node.delete()
 
-        # If node is the tail
+        # If node equals the tail
         elif self.tail == node:
-            # Previous element automatically becomes new tail
+            # Assign the previous element to current (deleted) tail
             self.tail = self.tail.prev
+            # Delete the node (see comment parenthesis above)
             node.delete()
 
-        # Otherwise
+        # Otherwise, we don't need to do anything with head or tail
         else:
-            # Existing delete method handles the pointers
+            # So we can just delete the node without reassignments
             node.delete()
-            # (It changes assignment to self.next and self.prev)
+            # (This method handles reassigns prev/next on other nodes)
 
+        # Decrement the length by one to account for deleted node
         self.length -= 1
         
     """Returns the highest value currently in the list"""

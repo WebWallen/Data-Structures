@@ -161,7 +161,7 @@ class DoublyLinkedList:
         # If node equals the tail
         elif self.tail == node:
             # Assign the previous element to current (deleted) tail
-            self.tail = self.tail.next 
+            self.tail = self.tail.prev
             # Delete the node (see comment parenthesis above)
             node.delete()
 

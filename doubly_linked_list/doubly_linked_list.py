@@ -1,6 +1,7 @@
+# Import doesn't work, having to copy/paste the whole file's code
+
 """Each ListNode holds a reference to its previous node
 as well as its next node in the List."""
-
 
 class ListNode:
     def __init__(self, value, prev=None, next=None):
@@ -76,7 +77,10 @@ class DoublyLinkedList:
     current head's next node the new head of the List.
     Returns the value of the removed Node."""
     def remove_from_head(self):
-        value = self.head.value
+        if self.head == None:
+            return None
+        else:
+            value = self.head.value
         # Value is here because it's explicitly requested in return
         self.delete(self.head)
         # Can simply use the delete method already created above
@@ -104,7 +108,10 @@ class DoublyLinkedList:
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        value = self.tail.value
+        if self.tail == None:
+            return None
+        else:
+            value = self.tail.value
         self.delete(self.tail)
         # Don't have to reassign pointers - already done by delete()
         return value
@@ -132,37 +139,40 @@ class DoublyLinkedList:
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
     def delete(self, node):
-        # Decrement length to fit deletion
-        self.length -= 1
 
-        # LL is empty
+        # If there is not a head *and* tail (LL is empty)
         if not self.head and not self.tail:
             # Nothing to delete, so just return
             return
         
-        # If head and tail are the same
-        if self.head == self.tail:
-            # Assign both values to None
+        # If head and tail are equal and node is in the head (vs an object or other data structure)
+        if self.head == self.tail and self.head is node:
+            # Assign both head and tail values to None
             self.head = None
             self.tail = None
 
-        # If node is the head
+        # If node equals the head
         elif self.head == node:
-            # Next element automatically becomes new head
-            self.head == self.head.next
+            # Assign the next element to current (deleted) head
+            self.head = self.head.next
+            # Delete the node (this method is in node class)
             node.delete()
 
-        # If node is the tail
+        # If node equals the tail
         elif self.tail == node:
-            # Previous element automatically becomes new tail
-            self.tail == self.tail.prev
+            # Assign the previous element to current (deleted) tail
+            self.tail = self.tail.prev
+            # Delete the node (see comment parenthesis above)
             node.delete()
 
-        # Otherwise
+        # Otherwise, we don't need to do anything with head or tail
         else:
-            # Existing delete method handles the pointers
+            # So we can just delete the node without reassignments
             node.delete()
-            # (It changes assignment to self.next and self.prev)
+            # (This method handles reassigns prev/next on other nodes)
+
+        # Decrement the length by one to account for deleted node
+        self.length -= 1
         
     """Returns the highest value currently in the list"""
     def get_max(self):
