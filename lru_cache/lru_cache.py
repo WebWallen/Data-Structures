@@ -9,11 +9,11 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        # Now the DLL and self.storage are two separate entities, hence self.list
+        # Now the DLL and self.storage are two separate entities, hence self.list as home for DoublyLinkedList()
         self.list = DoublyLinkedList()
-        # Self.storage should be a dictionary since it allows for key/value pairs
+        # Self.storage should be assigned an empty dictionary since it needs to store key/value pairs
         self.storage = dict()
-        # Limit is here to make sure we don't need to make room for new data
+        # Limit is here to make sure we don't need to make room for new data -- assign to self.limit
         self.limit = limit
 
     """
@@ -24,14 +24,14 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        # If the key isn't stored, there's nothing to return
+        # If the key isn't in self.storage, there's nothing to return (0)
         if key not in self.storage:
             return None
-        # Otherwise, assign the key value to node variable
+        # Otherwise, assign the storage [key] value to node variable
         node = self.storage[key]
-        # Most recently accessed so move node to the front
+        # Most recently accessed node so move it to the front
         self.list.move_to_front(node)
-        # Add [1] because otherwise returns two entities
+        # return node value [1] (because it's a key/VALUE)
         return node.value[1]
 
     """
@@ -46,25 +46,24 @@ class LRUCache:
     """
     def set(self, key, value):
         if key in self.storage:
-        # If key is already stored, simply update its value
+        # If key is already stored, simply update key contained in storage
             node = self.storage[key]
-            # Most recently accessed so move to the front
+            # Most recently accessed so move to the front of DLL (list)  
             self.list.move_to_front(node)
-            # Assign a tuple to node for key and value
+            # Assign both the (key, and, value) to node.value
             node.value = (key, value)
-            # Return the new value of existing key
+            # Return the the key value pair inside node.value
             return node.value
 
         if len(self.list) >= self.limit:
-        # If we're at max capacity, remove least recently used item (tail)
+        # If we're at max capacity, remove key value [0] of the DLL's tail from storage with pop
             self.storage.pop(self.list.tail.value[0])
-            # Removes key from the dictionary
+            # Remove the DLL node from tail
             self.list.remove_from_tail()
-            # Removes value from the DLL
         
-        # Add the key/value pair to the head since it's most recently used
+        # Add the destructured key and value to head since it's most recently used
         self.list.add_to_head((key, value))
-        # Key of dictionary should coincide with value of the DLL
+        # Update [key] of storage dictionary to match the head of our DLL
         self.storage[key] = self.list.head
-        # Return the newly created, most recently used item
+        # Return the newly created, most recently used node (DLL head)
         return self.list.head
