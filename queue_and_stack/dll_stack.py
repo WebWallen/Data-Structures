@@ -201,7 +201,7 @@ class Stack:
         self.storage.add_to_head(value)
 
     def pop(self):
-        self.storage.remove_from_head()
+        return self.storage.remove_from_head()
 
     def len(self):
         return len(self.storage)
