@@ -77,7 +77,10 @@ class DoublyLinkedList:
     current head's next node the new head of the List.
     Returns the value of the removed Node."""
     def remove_from_head(self):
-        value = self.head.value
+        if self.head == None:
+            return None
+        else:
+            value = self.head.value
         # Value is here because it's explicitly requested in return
         self.delete(self.head)
         # Can simply use the delete method already created above
@@ -105,7 +108,10 @@ class DoublyLinkedList:
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        value = self.tail.value
+        if self.tail == None:
+            return None
+        else:
+            value = self.tail.value
         self.delete(self.tail)
         # Don't have to reassign pointers - already done by delete()
         return value
@@ -138,13 +144,9 @@ class DoublyLinkedList:
         if not self.head and not self.tail:
             # Nothing to delete, so just return
             return
-
-        if self.length is not None:
-            # Decrement length to fit deletion
-            self.length -= 1
         
-        # If head and tail are the same
-        if self.head == self.tail:
+        # If head and tail are the same and head is a node (vs an object or other data structure)
+        if self.head == self.tail and self.head is node:
             # Assign both values to None
             self.head = None
             self.tail = None
@@ -152,13 +154,14 @@ class DoublyLinkedList:
         # If node is the head
         elif self.head == node:
             # Next element automatically becomes new head
-            self.head == self.head.next
+            self.head = self.head.next
+            # We want ASSIGNMENT, not EQUALITY here!!!
             node.delete()
 
         # If node is the tail
         elif self.tail == node:
             # Previous element automatically becomes new tail
-            self.tail == self.tail.prev
+            self.tail = self.tail.prev
             node.delete()
 
         # Otherwise
@@ -166,6 +169,8 @@ class DoublyLinkedList:
             # Existing delete method handles the pointers
             node.delete()
             # (It changes assignment to self.next and self.prev)
+
+        self.length -= 1
         
     """Returns the highest value currently in the list"""
     def get_max(self):
@@ -189,7 +194,6 @@ class DoublyLinkedList:
 
 class Queue:
     def __init__(self):
-        self.size = 0
         # Why is our DLL a good choice to store our elements?
         self.storage = DoublyLinkedList()
         # Good choice because already ordered from low to high?
@@ -197,15 +201,10 @@ class Queue:
     def enqueue(self, value):
         # New values go to the back of the line
         self.storage.add_to_tail(value)
-        self.size += 1
 
     def dequeue(self):
-        if self.size > 0:
         # Values leave from the front when exiting
-            self.size -= 1
-            return self.storage.remove_from_head()
-        else:
-            return None
+        return self.storage.remove_from_head()
 
     def len(self):
-        return self.size
+        return len(self.storage)
