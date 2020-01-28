@@ -196,17 +196,17 @@ class DoublyLinkedList:
 
 class Queue:
     def __init__(self):
-        # Why is our DLL a good choice to store our elements?
+        # Assign a DLL() to self.storage
         self.storage = DoublyLinkedList()
-        # Good choice because already ordered from low to high?
 
     def enqueue(self, value):
-        # New values go to the back of the line
+        # Add node value to tail of DLL ("first in...")
         self.storage.add_to_tail(value)
 
     def dequeue(self):
-        # Values leave from the front when exiting
+        # Return + remove node from head of DLL ("...first out")
         return self.storage.remove_from_head()
 
     def len(self):
+        # Return length of DLL as assigned to self.storage
         return len(self.storage)

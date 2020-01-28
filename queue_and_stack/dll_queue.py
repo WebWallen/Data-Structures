@@ -204,8 +204,9 @@ class Queue:
         self.storage.add_to_tail(value)
 
     def dequeue(self):
-        # Remove node from head of DLL ("...first out") and return
+        # Return + remove node from head of DLL ("...first out")
         return self.storage.remove_from_head()
 
     def len(self):
+        # Return length of DLL as assigned to self.storage
         return len(self.storage)
