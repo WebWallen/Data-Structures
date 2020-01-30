@@ -123,8 +123,7 @@ class BinarySearchTree:
                 # Call enqueue on the queue and pass those leaves in as an argument
                 queue.enqueue(leaf.right)
 
-    # Print the value of every node, starting with the given node,
-    # in an iterative depth first traversal
+    # Print the value of every node, starting with the given node, in an iterative depth first traversal (depth first means "USE A STACK")
     def dft_print(self, node):
         # If there's not a node value, there's no work to do, so simply return
         if node.value is None:
