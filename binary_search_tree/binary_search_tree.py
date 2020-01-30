@@ -86,41 +86,66 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
+        # If there's actually a value...
         if self.value is not None:
+            # If there are any elements on the left...
             if self.left:
-                self.left.in_order_print(self.left)
+                # Recursively call this function on the left branch
+                self.left.in_order_print(self.left) # First self.left is the next branch and the second is its twigs/leaves
+            # Print value -- they end up in order since it goes: root/current -> left branch -> left-right -> right branch -> right-left -> right-right
             print(self.value)
+            # If there are any elements on the right...
             if self.right:
-                self.right.in_order_print(self.right)
+                # Recursively call this function on the right branch
+                self.right.in_order_print(self.right) # First self.right is the next branch and the second is its twigs/leaves
 
-    # Print the value of every node, starting with the given node,
-    # in an iterative breadth first traversal
+    # Print the value of every node, starting with the given node, in an iterative breadth first traversal (breadth first means "USE A QUEUE")
     def bft_print(self, node):
+        # If there's not a node value, there's nothing to do, so simply return
         if node.value is None:
             return
+        # Assign an empty Queue class to a queue variable (this is possible due to the imports on top)
         queue = Queue()
+        # Call enqueue on the queue to add a node(argument) to the back of our line
         queue.enqueue(node)
+        # While the queue has a length... (note: wouldn't work with typical len(check_me) syntax -- don't know why, but use check_me.len() instead)
         while queue.len() is not 0:
+            # Call dequeue on the queue to remove a node from the front of our line and assign it to a "leaf" variable
             leaf = queue.dequeue()
+            # Print the leaf's value
             print(leaf.value)
+            # If there are anymore leaves on the left side...
             if leaf.left is not None:
+                # Call enqueue on the queue and pass those leaves in as an argument
                 queue.enqueue(leaf.left)
+            # If there are anymore leaves on the right side...
             if leaf.right is not None:
+                # Call enqueue on the queue and pass those leaves in as an argument
                 queue.enqueue(leaf.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
+        # If there's not a node value, there's no work to do, so simply return
         if node.value is None:
             return
+        # Create an empty Stack() and assign it to a "stack" variable
         stack = Stack()
+        # Call the push method on "stack" and pass in the node as an argument
         stack.push(node)
+        # While the stack has a length (see note in queue about the dot notation versus parenthesis as usual)
         while stack.len() is not 0:
+            # Call the pop method on "stack" and assign the result to an element variable
             element = stack.pop()
+            # Print the element's value
             print(element.value)
+            # If there are any elements on the left...
             if element.left is not None:
+                # Call the push method on "stack" and pass the left element inside
                 stack.push(element.left)
+            # If there are any elements on the right...
             if element.right is not None:
+                # Call the push method on "stack" and pass the right element inside
                 stack.push(element.right)
 
     # STRETCH Goals -------------------------
