@@ -64,6 +64,22 @@ class BinarySearchTree:
             # Otherwise, return root/current value (self.value) because there are no larger numbers
             return self.value
 
+    def get_max_iterative(self): 
+        # Assign max value to input value
+        max_value = self.value
+        # Assign input to current
+        current = self
+        # While current (max is being calculated)...
+        while current:
+            # If current node is greater than max
+            if current > max_value:
+                # Update max_value with current value
+                max_value = current.value
+            # Move current to the right and repeat until test complete
+            current = current.right
+        # Return max value (node value farthest to the right by this stage)
+        return max_value
+
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
