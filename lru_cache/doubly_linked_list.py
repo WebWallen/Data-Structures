@@ -69,7 +69,7 @@ class DoublyLinkedList:
             new_node.next = self.head
             # Current head becomes new node's "next"
             self.head.prev = new_node
-            # Current head's "previous" becomes new node
+            # New node becomes current head's "previous"
             self.head = new_node
             # Now it's safe to assign new node as new head
 
@@ -100,7 +100,7 @@ class DoublyLinkedList:
             new_node.prev = self.tail
             # Current tail becomes new node's "previous"
             self.tail.next = new_node
-            # Current tail's "next" becomes the new node
+            # New node becomes the current tail's "next"
             self.tail = new_node
             # Now it's safe to assign new node as new tail
 
@@ -145,22 +145,22 @@ class DoublyLinkedList:
             # Nothing to delete, so just return
             return
         
-        # If head and tail are equal and node is in the head (vs an object or other data structure)
+        # If head and tail are the same (only one node in LL) and head is a node (vs other data structure)
         if self.head == self.tail and self.head is node:
-            # Assign both head and tail values to None
+            # Assign both head and tail values to None since it's empty now
             self.head = None
             self.tail = None
 
         # If node equals the head
         elif self.head == node:
-            # Assign the next element to current (deleted) head
+            # Assign the next node to head before deleting it
             self.head = self.head.next
             # Delete the node (this method is in node class)
             node.delete()
 
         # If node equals the tail
         elif self.tail == node:
-            # Assign the previous element to current (deleted) tail
+            # Assign the previous node to tail before deleting it
             self.tail = self.tail.prev
             # Delete the node (see comment parenthesis above)
             node.delete()

@@ -24,12 +24,12 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        # If the key isn't in self.storage, there's nothing to return (0)
+        # If the key isn't in self.storage, there's nothing to return
         if key not in self.storage:
             return None
         # Otherwise, assign the storage [key] value to node variable
         node = self.storage[key]
-        # Most recently accessed node so move it to the front
+        # Most recently accessed node so move it to the front of DLL
         self.list.move_to_front(node)
         # return node value [1] (because it's a key/VALUE)
         return node.value[1]
@@ -56,12 +56,12 @@ class LRUCache:
             return node.value
 
         if len(self.list) >= self.limit:
-        # If we're at max capacity, remove key value [0] of the DLL's tail from storage with pop
+        # If we're at max capacity, remove key from value [0] of the DLL's tail with pop
             self.storage.pop(self.list.tail.value[0])
-            # Remove the DLL node from tail
+            # Remove the DLL node from tail (least recently used item)
             self.list.remove_from_tail()
         
-        # Add the destructured key and value to head since it's most recently used
+        # Add the destructured key and value passed via set as an argument to head since it's the new most recently used item
         self.list.add_to_head((key, value))
         # Update [key] of storage dictionary to match the head of our DLL
         self.storage[key] = self.list.head
