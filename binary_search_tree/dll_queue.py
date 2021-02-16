@@ -161,7 +161,7 @@ class DoublyLinkedList:
         # If node equals the tail
         elif self.tail == node:
             # Assign the previous element to current (deleted) tail
-            self.tail = self.tail.prev
+            self.tail = self.tail.next 
             # Delete the node (see comment parenthesis above)
             node.delete()
 
@@ -193,16 +193,17 @@ class DoublyLinkedList:
         # After loop is complete, return max
         return max_value
 
-class Stack:
+
+class Queue:
     def __init__(self):
-        # Assign a new DLL() to self.storage
+        # Assign a DLL() to self.storage
         self.storage = DoublyLinkedList()
 
-    def push(self, value):
-        # Add value to head of DLL ("Last in...")
-        self.storage.add_to_head(value)
+    def enqueue(self, value):
+        # Add node value to tail of DLL ("first in...")
+        self.storage.add_to_tail(value)
 
-    def pop(self):
+    def dequeue(self):
         # Return + remove node from head of DLL ("...first out")
         return self.storage.remove_from_head()
 
